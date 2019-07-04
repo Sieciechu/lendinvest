@@ -61,33 +61,41 @@ func newInvestment(i *Investor, m Cash, monthlyInterestPercetage uint,
 
 func (investment *investment) calculatePaychecks() {
 
-	paymentDate := investment.startDate
+	periodStart := investment.startDate
 	end := investment.endDate
 
 	for k, size := 0, len(investment.paychecks); k < size; k++ {
 
-		nextPaymentDate := getNextPaymentDate(paymentDate, end)
-		numberOfDays := nextPaymentDate.Sub(paymentDate).Hours() / 24.0
+		nextPaymentDate := getNextPaymentDate(periodStart, end)
 
-		daysInCurrentPaymentMonth := float64(31)
-
-		var percent float64 = (1.0 + float64(investment.monthlyInterestPercetage)/100.0)
-
-		var moneyToPay Cash = Cash(
-			float64(investment.investedMoney) * percent / daysInCurrentPaymentMonth * numberOfDays)
-
-		p := paycheck{investor: investment.investor, dateOfPayment: nextPaymentDate,
+		moneyToPay := investment.calculateMoneyToPayForPeriod(periodStart, nextPaymentDate)
+		p := paycheck{investor: investment.investor,
+			periodStart: periodStart, periodEnd: nextPaymentDate, dateOfPayment: nextPaymentDate,
 			moneyToPay: moneyToPay, paid: false, title: "income from investment"}
 
 		investment.paychecks[k] = p
 
-		paymentDate = nextPaymentDate
+		periodStart = nextPaymentDate.AddDate(0, 0, 1)
 	}
 
-	returnOfInvestedMoney := paycheck{investor: investment.investor, dateOfPayment: paymentDate,
+	returnOfInvestedMoney := paycheck{investor: investment.investor,
+		periodStart: periodStart, periodEnd: end, dateOfPayment: end,
 		moneyToPay: investment.investedMoney, paid: false, title: "return of investment"}
 
 	investment.paychecks = append(investment.paychecks, returnOfInvestedMoney)
+}
+
+func (investment *investment) calculateMoneyToPayForPeriod(start, end time.Time) Cash {
+
+	maxDaysInCurrentPaymentMonth := float64(calendar.GetLastDayOfMonth(start))
+	actualNumberOfDays := end.Sub(start).Hours() / 24.0
+
+	var percent float64 = (1.0 + float64(investment.monthlyInterestPercetage)/100.0)
+
+	var moneyToPay Cash = Cash(
+		float64(investment.investedMoney) * percent / maxDaysInCurrentPaymentMonth * actualNumberOfDays)
+
+	return moneyToPay
 }
 
 func getNextPaymentDate(start, end time.Time) time.Time {
@@ -111,6 +119,8 @@ func calculateNumberOfPaychecks(start, end time.Time) (n int) {
 
 type paycheck struct {
 	investor      *Investor
+	periodStart   time.Time
+	periodEnd     time.Time
 	dateOfPayment time.Time
 	moneyToPay    Cash
 	paid          bool
