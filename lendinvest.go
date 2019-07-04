@@ -100,6 +100,9 @@ func getNextPaymentDate(start, end time.Time) time.Time {
 }
 
 func calculateNumberOfPaychecks(start, end time.Time) (n int) {
+	if start.Equal(end) {
+		return 1
+	}
 	for i := start; end.After(i); i = i.AddDate(0, 1, 0) {
 		n++
 	}
