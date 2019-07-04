@@ -93,7 +93,7 @@ func (investment *investment) calculatePaychecks() {
 func getNextPaymentDate(start, end time.Time) time.Time {
 
 	if end.Year() == start.Year() && end.Month() == start.Month() {
-		return end.AddDate(0, 0, 0) // AddDate the easiest way to return copy time struct
+		return end
 	}
 
 	return start.AddDate(0, 1, (-start.Day() + 1)) // set date to 1st day of next month
