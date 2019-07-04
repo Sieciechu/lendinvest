@@ -14,7 +14,7 @@ type Lendinvest struct {
 type loan struct {
 	start    time.Time
 	end      time.Time
-	tranches map[trancheId]tranche
+	tranches map[trancheID]tranche
 }
 
 type Cash float64
@@ -24,10 +24,10 @@ type Investor interface {
 	takeMoney(money Cash)
 }
 
-type trancheId string
+type trancheID string
 
 type tranche struct {
-	id                       trancheId
+	id                       trancheID
 	maximumInvestment        Cash
 	investmentsLeft          Cash
 	monthlyInterestPercetage uint
