@@ -2,10 +2,8 @@ package lendinvest
 
 import (
 	"time"
-)
 
-const (
-	layoutISO = "2006-01-02"
+	"github.com/Sieciechu/lendinvest/calendar"
 )
 
 type Lendinvest struct {
@@ -17,11 +15,6 @@ type loan struct {
 	start    time.Time
 	end      time.Time
 	tranches map[trancheId]tranche
-}
-
-func newDate(isoDate string) time.Time {
-	t, _ := time.Parse(layoutISO, isoDate)
-	return t
 }
 
 type Cash float64
