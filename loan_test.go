@@ -1,7 +1,11 @@
 package lendinvest
 
-import "testing"
-import "time"
+import (
+	"testing"
+	"time"
+
+	"github.com/Sieciechu/lendinvest/calendar"
+)
 
 func TestCalculateNumberOfPaychecks(t *testing.T) {
 
@@ -10,10 +14,10 @@ func TestCalculateNumberOfPaychecks(t *testing.T) {
 		end            time.Time
 		expectedNumber int
 	}{
-		{newDate("2015-01-01"), newDate("2015-01-01"), 1},
-		{newDate("2015-01-01"), newDate("2015-01-31"), 1},
-		{newDate("2015-10-02"), newDate("2015-11-15"), 2},
-		{newDate("2015-10-02"), newDate("2016-11-15"), 14},
+		{calendar.NewDate("2015-01-01"), calendar.NewDate("2015-01-01"), 1},
+		{calendar.NewDate("2015-01-01"), calendar.NewDate("2015-01-31"), 1},
+		{calendar.NewDate("2015-10-02"), calendar.NewDate("2015-11-15"), 2},
+		{calendar.NewDate("2015-10-02"), calendar.NewDate("2016-11-15"), 14},
 	}
 	for _, c := range cases {
 		got := calculateNumberOfPaychecks(c.start, c.end)
