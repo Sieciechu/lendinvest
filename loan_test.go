@@ -15,6 +15,9 @@ func TestCalculateNumberOfPaychecks(t *testing.T) {
 		expectedNumber int
 	}{
 		{calendar.NewDate("2015-01-01"), calendar.NewDate("2015-01-01"), 1},
+		{calendar.NewDate("2015-01-31"), calendar.NewDate("2015-01-31"), 1},
+		{calendar.NewDate("2015-01-16"), calendar.NewDate("2015-02-01"), 2},
+		{calendar.NewDate("2015-01-01"), calendar.NewDate("2015-02-01"), 2},
 		{calendar.NewDate("2015-01-01"), calendar.NewDate("2015-01-31"), 1},
 		{calendar.NewDate("2015-10-02"), calendar.NewDate("2015-11-15"), 2},
 		{calendar.NewDate("2015-10-02"), calendar.NewDate("2016-11-15"), 14},
