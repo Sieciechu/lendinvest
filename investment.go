@@ -31,6 +31,14 @@ func newInvestment(i *Investor, m Cash, monthlyInterestPercetage uint,
 	return investment
 }
 
+func calculateNumberOfPaychecks(start, end time.Time) (n int) {
+	for end.After(start) || end.Equal(start) {
+		n++
+		start = start.AddDate(0, 1, (-start.Day() + 1))
+	}
+	return
+}
+
 func (investment *investment) calculatePaychecks() {
 
 	periodStart := investment.startDate
@@ -57,6 +65,15 @@ func (investment *investment) calculatePaychecks() {
 	investment.paychecks = append(investment.paychecks, returnOfInvestedMoney)
 }
 
+func getNextPaymentDate(start, end time.Time) time.Time {
+
+	if end.Year() == start.Year() && end.Month() == start.Month() {
+		return end
+	}
+
+	return start.AddDate(0, 1, (-start.Day() + 1)) // set date to 1st day of next month
+}
+
 func (investment *investment) calculateMoneyToPayForPeriod(start, end time.Time) Cash {
 
 	maxDaysInCurrentPaymentMonth := float64(calendar.GetLastDayOfMonth(start))
@@ -68,23 +85,6 @@ func (investment *investment) calculateMoneyToPayForPeriod(start, end time.Time)
 		float64(investment.investedMoney) * percent / maxDaysInCurrentPaymentMonth * actualNumberOfDays)
 
 	return moneyToPay
-}
-
-func getNextPaymentDate(start, end time.Time) time.Time {
-
-	if end.Year() == start.Year() && end.Month() == start.Month() {
-		return end
-	}
-
-	return start.AddDate(0, 1, (-start.Day() + 1)) // set date to 1st day of next month
-}
-
-func calculateNumberOfPaychecks(start, end time.Time) (n int) {
-	for end.After(start) || end.Equal(start) {
-		n++
-		start = start.AddDate(0, 1, (-start.Day() + 1))
-	}
-	return
 }
 
 type paycheck struct {
