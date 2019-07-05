@@ -1,6 +1,7 @@
 package lendinvest
 
 import (
+	"math"
 	"time"
 
 	"github.com/Sieciechu/lendinvest/calendar"
@@ -28,14 +29,15 @@ type paycheck struct {
 // Factory function to create new investment and calculates future paychecks
 // so we know in advance what money we will have to transfer
 // when time of paycheck will occur
-func newInvestment(i *Investor, m Cash, monthlyInterestPercetage uint,
+func newInvestment(i *Investor, money Cash, monthlyInterestPercetage uint,
 	start time.Time, end time.Time) investment {
 
 	investment := investment{investor: i,
-		investedMoney: m,
-		startDate:     start,
-		endDate:       end,
-		paychecks:     nil}
+		investedMoney:            money,
+		startDate:                start,
+		endDate:                  end,
+		monthlyInterestPercetage: monthlyInterestPercetage,
+		paychecks:                nil}
 
 	investment.calculatePaychecks()
 
@@ -44,12 +46,13 @@ func newInvestment(i *Investor, m Cash, monthlyInterestPercetage uint,
 
 // Support method for factory newInvestment()
 // Creates paychecks according to investment
+// 	plus additional last one being the return of invested money
 func (investment *investment) calculatePaychecks() {
 
 	investment.paychecks = nil
-	
+
 	count := calculateNumberOfPaychecks(investment.startDate, investment.endDate)
-	
+
 	periodStart := investment.startDate
 	end := investment.endDate
 	for k := 0; k < count; k++ {
@@ -98,12 +101,13 @@ func getNextPaymentDate(start, end time.Time) time.Time {
 func (investment *investment) calculateMoneyToPayForPeriod(start, end time.Time) Cash {
 
 	maxDaysInCurrentPaymentMonth := float64(calendar.GetLastDayOfMonth(start))
-	actualNumberOfDays := end.Sub(start).Hours() / 24.0
+	actualNumberOfDays := (end.Sub(start).Hours() + 24) / 24.0
 
-	var percent float64 = (1.0 + float64(investment.monthlyInterestPercetage)/100.0)
+	var percent float64 = float64(investment.monthlyInterestPercetage) / 100.0
 
-	var moneyToPay Cash = Cash(
-		float64(investment.investedMoney) * percent / maxDaysInCurrentPaymentMonth * actualNumberOfDays)
+	result := (float64(investment.investedMoney) * percent / maxDaysInCurrentPaymentMonth) * actualNumberOfDays
+
+	moneyToPay := Cash(math.Round(result*100) / 100) // rount float to 2 decimal places
 
 	return moneyToPay
 }

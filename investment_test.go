@@ -57,3 +57,37 @@ func TestGetNextPaymentDate(t *testing.T) {
 		}
 	}
 }
+
+func TestCalculateMoneyToPayForPeriod(t *testing.T) {
+
+	date := calendar.NewDate
+
+	cases := []struct {
+		money          Cash
+		start, end     time.Time
+		percent        uint
+		expectedIncome Cash
+	}{
+		{1000, date("2019-10-03"), date("2019-11-15"), 3, 28.06},
+		{500, date("2019-10-10"), date("2019-11-15"), 6, 21.29},
+	}
+	_ = cases
+
+	// given
+	for _, c := range cases {
+		i := investment{
+			investedMoney:            c.money,
+			startDate:                c.start,
+			endDate:                  c.end,
+			monthlyInterestPercetage: c.percent,
+		}
+
+		// when
+		moneyForFirstMonth := i.calculateMoneyToPayForPeriod(c.start, date("2019-10-31"))
+
+		// then
+		if moneyForFirstMonth != c.expectedIncome {
+			t.Errorf("Expected %f, but got %f", c.expectedIncome, moneyForFirstMonth)
+		}
+	}
+}
