@@ -15,6 +15,16 @@ type investment struct {
 	paychecks                []paycheck
 }
 
+type paycheck struct {
+	investor      *Investor
+	periodStart   time.Time
+	periodEnd     time.Time
+	dateOfPayment time.Time
+	moneyToPay    Cash
+	paid          bool
+	title         string
+}
+
 func newInvestment(i *Investor, m Cash, monthlyInterestPercetage uint,
 	start time.Time, end time.Time) investment {
 
@@ -85,14 +95,4 @@ func (investment *investment) calculateMoneyToPayForPeriod(start, end time.Time)
 		float64(investment.investedMoney) * percent / maxDaysInCurrentPaymentMonth * actualNumberOfDays)
 
 	return moneyToPay
-}
-
-type paycheck struct {
-	investor      *Investor
-	periodStart   time.Time
-	periodEnd     time.Time
-	dateOfPayment time.Time
-	moneyToPay    Cash
-	paid          bool
-	title         string
 }
