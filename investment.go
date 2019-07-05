@@ -57,16 +57,16 @@ func (investment *investment) calculatePaychecks() {
 	end := investment.endDate
 	for k := 0; k < count; k++ {
 
-		nextPaymentDate := getNextPaymentDate(periodStart, end)
+		periodEndDate := getNearestPeriodEndDate(periodStart, end)
 
-		moneyToPay := investment.calculateMoneyToPayForPeriod(periodStart, nextPaymentDate)
+		moneyToPay := investment.calculateMoneyToPayForPeriod(periodStart, periodEndDate)
 		p := paycheck{investor: investment.investor,
-			periodStart: periodStart, periodEnd: nextPaymentDate, dateOfPayment: nextPaymentDate,
+			periodStart: periodStart, periodEnd: periodEndDate, dateOfPayment: periodEndDate.AddDate(0, 0, 1),
 			moneyToPay: moneyToPay, paid: false, title: "income from investment"}
 
 		investment.paychecks = append(investment.paychecks, p)
 
-		periodStart = nextPaymentDate.AddDate(0, 0, 1)
+		periodStart = periodEndDate.AddDate(0, 0, 1)
 	}
 
 	returnOfInvestedMoney := paycheck{investor: investment.investor,
@@ -87,13 +87,13 @@ func calculateNumberOfPaychecks(start, end time.Time) (n int) {
 }
 
 // Support method for calculatePaychecks()
-func getNextPaymentDate(start, end time.Time) time.Time {
+func getNearestPeriodEndDate(start, end time.Time) time.Time {
 
 	if end.Year() == start.Year() && end.Month() == start.Month() {
 		return end
 	}
 
-	return start.AddDate(0, 1, (-start.Day() + 1)) // set date to 1st day of next month
+	return start.AddDate(0, 0, (-start.Day() + calendar.GetLastDayOfMonth(start))) // set last day of given month
 }
 
 // It calculates how much money should be paid for each payment period (each paycheck)

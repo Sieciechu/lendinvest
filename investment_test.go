@@ -33,7 +33,7 @@ func TestCalculateNumberOfPaychecks(t *testing.T) {
 	}
 }
 
-func TestGetNextPaymentDate(t *testing.T) {
+func TestGetNearestPeriodEndDate(t *testing.T) {
 
 	date := calendar.NewDate
 
@@ -44,13 +44,13 @@ func TestGetNextPaymentDate(t *testing.T) {
 	}{
 		{date("2018-07-01"), date("2018-07-01"), date("2018-07-01")},
 		{date("2018-07-04"), date("2018-07-15"), date("2018-07-15")},
-		{date("2018-07-04"), date("2018-08-15"), date("2018-08-01")},
-		{date("2018-07-31"), date("2018-08-01"), date("2018-08-01")},
-		{date("2018-07-07"), date("2018-12-01"), date("2018-08-01")},
+		{date("2018-07-04"), date("2018-08-15"), date("2018-07-31")},
+		{date("2018-07-31"), date("2018-08-01"), date("2018-07-31")},
+		{date("2018-07-07"), date("2018-12-01"), date("2018-07-31")},
 	}
 
 	for _, c := range cases {
-		got := getNextPaymentDate(c.start, c.end)
+		got := getNearestPeriodEndDate(c.start, c.end)
 
 		if !c.expected.Equal(got) {
 			t.Errorf("Expected %q, but got %q", c.expected, got)
@@ -89,5 +89,32 @@ func TestCalculateMoneyToPayForPeriod(t *testing.T) {
 		if moneyForFirstMonth != c.expectedIncome {
 			t.Errorf("Expected %f, but got %f", c.expectedIncome, moneyForFirstMonth)
 		}
+	}
+}
+
+func TestCalculatePaychecks(t *testing.T) {
+	date := calendar.NewDate
+
+	// given
+	i := investment{
+		investedMoney:            1000,
+		startDate:                date("2019-10-03"),
+		endDate:                  date("2019-11-15"),
+		monthlyInterestPercetage: 3,
+		paychecks:                nil,
+	}
+
+	// when
+	i.calculatePaychecks()
+
+	// then
+	if n := len(i.paychecks); n != 3 {
+		t.Errorf("Expected 3 paychecks, but got %d", n)
+	}
+	if m := i.paychecks[0].moneyToPay; m != 28.06 {
+		t.Errorf("Expected 28.06 for first paycheck, but got %s", m)
+	}
+	if m := i.paychecks[2].moneyToPay; m != 1000 {
+		t.Errorf("Expected to return the invested 1000, but got %s", m)
 	}
 }
