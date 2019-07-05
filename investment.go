@@ -101,6 +101,9 @@ func getNextPaymentDate(start, end time.Time) time.Time {
 func (investment *investment) calculateMoneyToPayForPeriod(start, end time.Time) Cash {
 
 	maxDaysInCurrentPaymentMonth := float64(calendar.GetLastDayOfMonth(start))
+
+	// If start date and end date are same, end.Sub() would return 0, but we invested for this one day
+	// therefore we must add one day (24 hours)
 	actualNumberOfDays := (end.Sub(start).Hours() + 24) / 24.0
 
 	var percent float64 = float64(investment.monthlyInterestPercetage) / 100.0
