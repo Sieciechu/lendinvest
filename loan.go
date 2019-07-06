@@ -19,7 +19,7 @@ type tranche struct {
 	maximumInvestment        Cash
 	investmentsLeft          Cash
 	monthlyInterestPercetage uint
-	investment               []investment
+	investments              []investment
 }
 
 func (l *loan) makeInvestment(i InvestmentRequest) (investment *investment, err error) {
@@ -65,10 +65,10 @@ func (t *tranche) makeInvestment(i InvestmentRequest) (*investment, error) {
 
 	t.investmentsLeft -= m
 
-	t.investment = append(t.investment,
-		 newInvestment(i.investor, m, t.monthlyInterestPercetage, i.startDate, i.endDate))
+	t.investments = append(t.investments,
+		newInvestment(i.investor, m, t.monthlyInterestPercetage, i.startDate, i.endDate))
 
-	createdInvestment := &t.investment[len(t.investment)-1]
+	createdInvestment := &t.investments[len(t.investments)-1]
 
 	return createdInvestment, nil
 }

@@ -26,7 +26,7 @@ func TestWhenInvestorCannotLendMoneyThenInvestmentShouldNotBeMade(t *testing.T) 
 		maximumInvestment:        2000,
 		investmentsLeft:          2000,
 		monthlyInterestPercetage: 3,
-		investment:               nil,
+		investments:              nil,
 	}
 
 	investmentRequest := InvestmentRequest{
@@ -51,7 +51,7 @@ func TestWhenInvestmentExceedsTrancheAvailableInvestmentsItShouldBeNotAllowedToI
 		maximumInvestment:        2000,
 		investmentsLeft:          30,
 		monthlyInterestPercetage: 3,
-		investment:               nil,
+		investments:              nil,
 	}
 
 	investmentRequest := InvestmentRequest{
@@ -76,7 +76,7 @@ func TestTrancheMakeInvestment(t *testing.T) {
 		maximumInvestment:        2000,
 		investmentsLeft:          1500,
 		monthlyInterestPercetage: 3,
-		investment:               nil,
+		investments:              nil,
 	}
 
 	investmentRequest := InvestmentRequest{
