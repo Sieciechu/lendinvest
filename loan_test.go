@@ -90,9 +90,9 @@ func TestTrancheMakeInvestment(t *testing.T) {
 	if nil != err || nil == investment {
 		t.Errorf("Expected investment, but got error")
 	}
-	if investment.investedMoney != investmentRequest.investedMoney {
+	if investment.investedMoney != investmentRequest.moneyToInvest {
 		t.Errorf("Expected to invest %s money, but %s was invested",
-			investmentRequest.investedMoney, investment.investedMoney)
+			investmentRequest.moneyToInvest, investment.investedMoney)
 	}
 	if investment.investor != investmentRequest.investor {
 		t.Errorf("Investition was made by someone else")

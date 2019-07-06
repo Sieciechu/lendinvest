@@ -52,7 +52,7 @@ func (l *loan) checkInvestmentDates(investmentStart, investmentEnd time.Time) (o
 
 func (t *tranche) makeInvestment(i InvestmentRequest) (*investment, error) {
 
-	m, err := i.investor.LendMoney(i.investedMoney)
+	m, err := i.investor.LendMoney(i.moneyToInvest)
 	if err != nil {
 		return nil, err
 	}

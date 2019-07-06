@@ -23,7 +23,7 @@ type Investor interface {
 
 type InvestmentRequest struct {
 	investor      Investor
-	investedMoney Cash
+	moneyToInvest Cash
 	loanID        int
 	tranche       trancheID
 	startDate     time.Time
