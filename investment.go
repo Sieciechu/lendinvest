@@ -110,7 +110,7 @@ func (investment *investment) calculateMoneyToPayForPeriod(start, end time.Time)
 
 	result := (float64(investment.investedMoney) * percent / maxDaysInCurrentPaymentMonth) * actualNumberOfDays
 
-	moneyToPay := Cash(math.Round(result*100) / 100) // rount float to 2 decimal places
+	moneyToPay := Cash(math.Round(result*100) / 100) // round float to 2 decimal places
 
 	return moneyToPay
 }
