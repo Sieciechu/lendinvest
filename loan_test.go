@@ -106,3 +106,33 @@ func TestTrancheMakeInvestment(t *testing.T) {
 			investmentRequest.endDate, investment.endDate)
 	}
 }
+
+func TestCheckInvestmentDates(t *testing.T) {
+	// given
+	l := loan{start: date("2019-01-01"), end: date("2019-02-16")}
+
+	cases := []struct {
+		start          string
+		end            string
+		expectedResult bool
+	}{
+		{"2019-01-01", "2019-01-01", true},
+		{"2019-01-01", "2019-01-17", true},
+		{"2019-01-01", "2019-02-16", true},
+
+		{"2019-01-01", "2019-02-17", false},
+		{"2018-12-31", "2019-02-16", false},
+		{"2018-12-31", "2019-02-17", false},
+	}
+
+	for _, c := range cases {
+
+		// when
+		ok, _ := l.checkInvestmentDates(date(c.start), date(c.end))
+
+		// then
+		if ok != c.expectedResult {
+			t.Errorf("Expected %v, but got %v", c.expectedResult, ok)
+		}
+	}
+}
