@@ -22,11 +22,11 @@ func TestWhenInvestorCannotLendMoneyThenInvestmentShouldNotBeMade(t *testing.T) 
 	john := InvestorMock{}
 
 	trancheA := tranche{
-		id:                       "A",
-		maximumInvestment:        2000,
-		investmentsLeft:          2000,
-		monthlyInterestPercetage: 3,
-		investments:              nil,
+		id:                        "A",
+		maximumInvestment:         2000,
+		investmentsLeft:           2000,
+		monthlyInterestPercentage: 3,
+		investments:               nil,
 	}
 
 	investmentRequest := InvestmentRequest{
@@ -47,11 +47,11 @@ func TestWhenInvestmentExceedsTrancheAvailableInvestmentsItShouldBeNotAllowedToI
 	john := User{1000}
 
 	trancheA := tranche{
-		id:                       "A",
-		maximumInvestment:        2000,
-		investmentsLeft:          30,
-		monthlyInterestPercetage: 3,
-		investments:              nil,
+		id:                        "A",
+		maximumInvestment:         2000,
+		investmentsLeft:           30,
+		monthlyInterestPercentage: 3,
+		investments:               nil,
 	}
 
 	investmentRequest := InvestmentRequest{
@@ -72,11 +72,11 @@ func TestTrancheMakeInvestment(t *testing.T) {
 	john := User{1000}
 
 	trancheA := tranche{
-		id:                       "A",
-		maximumInvestment:        2000,
-		investmentsLeft:          1500,
-		monthlyInterestPercetage: 3,
-		investments:              nil,
+		id:                        "A",
+		maximumInvestment:         2000,
+		investmentsLeft:           1500,
+		monthlyInterestPercentage: 3,
+		investments:               nil,
 	}
 
 	investmentRequest := InvestmentRequest{
