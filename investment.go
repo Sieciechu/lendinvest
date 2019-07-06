@@ -8,7 +8,7 @@ import (
 )
 
 type investment struct {
-	investor                 *Investor
+	investor                 Investor
 	investedMoney            Cash
 	monthlyInterestPercetage uint
 	startDate                time.Time
@@ -17,7 +17,7 @@ type investment struct {
 }
 
 type paycheck struct {
-	investor      *Investor
+	investor      Investor
 	periodStart   time.Time
 	periodEnd     time.Time
 	dateOfPayment time.Time
@@ -29,7 +29,7 @@ type paycheck struct {
 // Factory function to create new investment and calculates future paychecks
 // so we know in advance what money we will have to transfer
 // when time of paycheck will occur
-func newInvestment(i *Investor, money Cash, monthlyInterestPercetage uint,
+func newInvestment(i Investor, money Cash, monthlyInterestPercetage uint,
 	start time.Time, end time.Time) investment {
 
 	investment := investment{investor: i,
