@@ -10,17 +10,21 @@ type Lendinvest struct {
 	paychecks []*paycheck
 }
 
+// Cash - simple type for representing money/cash
 type Cash float64
 
 func (c Cash) String() string {
 	return fmt.Sprintf("%.2f", c)
 }
 
+// Investor - anyone who implements this interface can invest in Lendinvest
 type Investor interface {
 	LendMoney(money Cash) (Cash, error)
 	TakeMoney(money Cash)
 }
 
+// InvestmentRequest is the DTO struct containing neccessary data to make investment request,
+// 	so we know: who invests, how much, the target, investment start date and investment end date
 type InvestmentRequest struct {
 	investor      Investor
 	moneyToInvest Cash
@@ -30,6 +34,8 @@ type InvestmentRequest struct {
 	endDate       time.Time
 }
 
+// MakeInvestment - method to make investment according to given investment request
+//	If something goes wrong, it returns false and error message
 func (l *Lendinvest) MakeInvestment(i InvestmentRequest) (ok bool, err error) {
 
 	loan := l.loans[i.loanID]

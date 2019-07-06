@@ -30,7 +30,7 @@ func TestGetLastDayOfMonth(t *testing.T) {
 		inDate      time.Time
 		expectedDay int
 	}{
-		{NewDate("2018-01-01"), 31},
+		{NewDate("2019-01-01"), 31},
 		{NewDate("2020-02-14"), 29},
 		{NewDate("2019-11-12"), 30},
 	}
