@@ -1,6 +1,8 @@
 package lendinvest
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestWhenUserHasEnoughMoneyMoneyIsLent(t *testing.T) {
 	u := User{money: 7.0}
@@ -36,5 +38,9 @@ func TestWhenUserTakesMoneyThenHeHasMoreMoney(t *testing.T) {
 	if 2.5 != u.money {
 		t.Errorf("User took %f money and should have %f, but has %f", 0.5, 2.5, u.money)
 	}
+}
 
+func TestUserShouldBeInvestor(t *testing.T) {
+
+	var _ Investor = &User{money: 2.0}
 }
