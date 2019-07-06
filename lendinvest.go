@@ -5,6 +5,11 @@ import (
 	"time"
 )
 
+// Lendinvest struct containing information about loans in which
+//	investors can invest and information about future paychecks - to know
+// 	when, to whom and how much cash should investor be paid.
+//
+//	Important: paychecks are generated automatically (by Lendinvest.MakeInvestment method)
 type Lendinvest struct {
 	loans     []loan
 	paychecks []*paycheck
@@ -47,4 +52,15 @@ func (l *Lendinvest) MakeInvestment(i InvestmentRequest) (ok bool, err error) {
 		}
 	}
 	return
+}
+
+// PayPaychecks - pay to assigned investors paychecks for given date
+func (l *Lendinvest) PayPaychecks(date time.Time) {
+	for i := range l.paychecks {
+		if !l.paychecks[i].dateOfPayment.Equal(date) || true == l.paychecks[i].paid {
+			continue
+		}
+		l.paychecks[i].investor.TakeMoney(l.paychecks[i].moneyToPay)
+		l.paychecks[i].paid = true
+	}
 }
