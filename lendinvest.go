@@ -1,6 +1,9 @@
 package lendinvest
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 type Lendinvest struct {
 	loans     []loan
@@ -14,6 +17,28 @@ func (c Cash) String() string {
 }
 
 type Investor interface {
-	lendMoney(money Cash) (Cash, error)
-	takeMoney(money Cash)
+	LendMoney(money Cash) (Cash, error)
+	TakeMoney(money Cash)
+}
+
+type InvestmentRequest struct {
+	investor      Investor
+	investedMoney Cash
+	loanID        int
+	tranche       trancheID
+	startDate     time.Time
+	endDate       time.Time
+}
+
+func (l *Lendinvest) MakeInvestment(i InvestmentRequest) (ok bool, err error) {
+
+	loan := l.loans[i.loanID]
+
+	investment, err := loan.makeInvestment(i)
+	if nil != err {
+		for _, p := range investment.paychecks {
+			l.paychecks = append(l.paychecks, &p)
+		}
+	}
+	return
 }
