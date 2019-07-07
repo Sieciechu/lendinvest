@@ -7,6 +7,8 @@ import (
 	"github.com/Sieciechu/lendinvest/calendar"
 )
 
+// investment struct contains information about made investment.
+// 	It's paychecks property is generated automatically on calculatePaychecks() call.
 type investment struct {
 	investor                 Investor
 	investedMoney            Cash
@@ -16,6 +18,7 @@ type investment struct {
 	paychecks                []paycheck
 }
 
+// paycheck struct contains information about future paycheck
 type paycheck struct {
 	investor      Investor
 	periodStart   time.Time

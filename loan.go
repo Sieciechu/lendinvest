@@ -6,14 +6,22 @@ import (
 	"time"
 )
 
+// loan struct contains information about loan and it's tranches
 type loan struct {
 	start    time.Time
 	end      time.Time
 	tranches map[trancheID]tranche
 }
 
-type trancheID string
+// simple type for TrancheID
+type TrancheID string
 
+
+// Tranche contains information about a Tranche
+//	* maximumInvestment is the initial "capacity"
+//  * investmentsLeft is actual "capacity" left to invest
+//	* investments - contain information about each investment made on the Tranche;
+//		they are generated automatically on makeInvestment()
 type tranche struct {
 	id                        trancheID
 	maximumInvestment         Cash
@@ -22,6 +30,7 @@ type tranche struct {
 	investments               []investment
 }
 
+// loan.makeInvestment - makes investment in the loan's Tranche according to investment request.
 func (l *loan) makeInvestment(i InvestmentRequest) (investment *investment, err error) {
 
 	ok, err := l.checkInvestmentDates(i.startDate, i.endDate)
@@ -35,6 +44,7 @@ func (l *loan) makeInvestment(i InvestmentRequest) (investment *investment, err 
 	return
 }
 
+// Support method for loan.makeInvestment. Checks if given dates are between loan's start-end dates
 func (l *loan) checkInvestmentDates(investmentStart, investmentEnd time.Time) (ok bool, err error) {
 
 	if investmentStart.Before(l.start) {
@@ -50,6 +60,9 @@ func (l *loan) checkInvestmentDates(investmentStart, investmentEnd time.Time) (o
 	return true, nil
 }
 
+// Tranche.makeInvestment - makes investment in the Tranche according to the investment request
+//	After each investment the "investmentsLeft" is lowered by invested money, so total investments
+//	cannot be larger than maximumInvestment
 func (t *tranche) makeInvestment(i InvestmentRequest) (*investment, error) {
 
 	m, err := i.investor.LendMoney(i.moneyToInvest)

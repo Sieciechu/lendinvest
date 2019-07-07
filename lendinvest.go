@@ -7,7 +7,7 @@ import (
 
 // Lendinvest struct containing information about loans in which
 //	investors can invest and information about future paychecks - to know
-// 	when, to whom and how much cash should investor be paid.
+// 	when, to whom and how much cash should Inv be paid.
 //
 //	Important: paychecks are generated automatically (by Lendinvest.MakeInvestment method)
 type Lendinvest struct {
