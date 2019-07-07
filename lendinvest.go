@@ -41,15 +41,17 @@ type InvestmentRequest struct {
 
 // MakeInvestment - method to make investment according to given investment request
 //	If something goes wrong, it returns false and error message
-func (l *Lendinvest) MakeInvestment(i InvestmentRequest) (ok bool, err error) {
+func (li *Lendinvest) MakeInvestment(i InvestmentRequest) (ok bool, err error) {
 
-	loan := l.loans[i.loanID]
+	loan := li.loans[i.LoanID]
 
 	investment, err := loan.makeInvestment(i)
 	if nil != err {
-		for _, p := range investment.paychecks {
-			l.paychecks = append(l.paychecks, &p)
-		}
+		return
+	}
+
+	for i := range investment.paychecks {
+		li.paychecks = append(li.paychecks, &investment.paychecks[i])
 	}
 	return
 }
