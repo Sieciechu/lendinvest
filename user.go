@@ -4,20 +4,20 @@ import "errors"
 
 // User - a type who will be able to invest
 type User struct {
-	money Cash
+	Money Cash
 }
 
 // Implementation of the Investor interface
 func (u *User) LendMoney(money Cash) (Cash, error) {
-	if money > u.money {
+	if money > u.Money {
 		return 0, errors.New("User has not enough money to lend")
 	}
-	u.money -= money
+	u.Money -= money
 
 	return money, nil
 }
 
 // Implementation of the Investor interface
 func (u *User) TakeMoney(money Cash) {
-	u.money += money
+	u.Money += money
 }

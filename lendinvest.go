@@ -31,12 +31,12 @@ type Investor interface {
 // InvestmentRequest is the DTO struct containing neccessary data to make investment request,
 // 	so we know: who invests, how much, the target, investment start date and investment end date
 type InvestmentRequest struct {
-	investor      Investor
-	moneyToInvest Cash
-	loanID        int
-	tranche       trancheID
-	startDate     time.Time
-	endDate       time.Time
+	Inv           Investor
+	MoneyToInvest Cash
+	LoanID        int
+	Tranche       TrancheID
+	StartDate     time.Time
+	EndDate       time.Time
 }
 
 // MakeInvestment - method to make investment according to given investment request
@@ -57,12 +57,17 @@ func (li *Lendinvest) MakeInvestment(i InvestmentRequest) (ok bool, err error) {
 }
 
 // PayPaychecks - pay to assigned investors paychecks for given date
-func (l *Lendinvest) PayPaychecks(date time.Time) {
-	for i := range l.paychecks {
-		if !l.paychecks[i].dateOfPayment.Equal(date) || true == l.paychecks[i].paid {
+func (li *Lendinvest) PayPaychecks(date time.Time) {
+	for i := range li.paychecks {
+		if !li.paychecks[i].dateOfPayment.Equal(date) || true == li.paychecks[i].paid {
 			continue
 		}
-		l.paychecks[i].investor.TakeMoney(l.paychecks[i].moneyToPay)
-		l.paychecks[i].paid = true
+		li.paychecks[i].investor.TakeMoney(li.paychecks[i].moneyToPay)
+		li.paychecks[i].paid = true
 	}
+}
+
+// AddLoan add loan to lendinvest
+func (li *Lendinvest) AddLoan(l loan) {
+	li.loans = append(li.loans, l)
 }

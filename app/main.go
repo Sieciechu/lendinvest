@@ -1,16 +1,41 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/Sieciechu/lendinvest"
 	"github.com/Sieciechu/lendinvest/calendar"
+
+	"fmt"
 )
 
 func main() {
-	fmt.Println("test")
-	x := calendar.NewDate("2022-09-30")
-	fmt.Println(x)
-	z := lendinvest.Lendinvest{}
-	fmt.Println(z)
+	li := lendinvest.Lendinvest{}
+	lb := lendinvest.LoanBuilder{}
+
+	lb.NewLoan("2019-10-01", "2019-11-15")
+	lb.AddTranche("A", 1000, 3)
+	lb.AddTranche("B", 1000, 6)
+	loan := lb.Create()
+
+	li.AddLoan(loan)
+
+	someUser := lendinvest.User{lendinvest.Cash(1000.0)}
+	fmt.Printf("At the beginning user has %s money\n", someUser.Money)
+
+	_, err := li.MakeInvestment(lendinvest.InvestmentRequest{
+		Inv:           &someUser,
+		MoneyToInvest: 1000,
+		LoanID:        0,
+		Tranche:       "C",
+		StartDate:     calendar.NewDate("2019-10-03"),
+		EndDate:       calendar.NewDate("2019-11-15")})
+
+	if nil != err {
+		fmt.Println(err)
+		return
+	}
+	fmt.Printf("Just after making investment of 1000 the user has %s money\n", someUser.Money)
+
+	li.PayPaychecks(calendar.NewDate("2019-11-01"))
+	fmt.Printf("At the end of the month the user got income of %s money\n", someUser.Money)
+
 }
