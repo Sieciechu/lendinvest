@@ -20,7 +20,8 @@ func main() {
 	fmt.Println(`Scenario
 - Given a loan (start 2019-10-01 end 2019-11-15).
 - Given the loan has 2 tranches called A and B (3% and 6% monthly interest rate) each with
-1,000 pounds amount available.`)
+1,000 pounds amount available.
+`)
 
 	someUser := lendinvest.User{Money: lendinvest.Cash(1000.0)}
 	fmt.Printf("At the beginning user has %s money\n", someUser.Money)
@@ -37,7 +38,7 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Printf("The user is making investment of 1000 on 2019-10-03")
+	fmt.Println("The user is making investment of 1000 on 2019-10-03")
 	fmt.Printf("Just after making the investment the user has %s money\n", someUser.Money)
 
 	li.PayPaychecks(calendar.NewDate("2019-11-01"))

@@ -1,5 +1,5 @@
 ### Introduction
-This app is kind of fast-short excercise about playing with golang and DDD and unit testing. It's not meant to be perfect. Everything is done without using a database.
+This app is kind of fast-short, to be done within few days, excercise about playing with golang and DDD and unit testing. It's not meant to be perfect. Everything is done without using a database.
 
 ### How to install:
 Clone the git repository to folder outside of your $GOPATH as the project uses go modules.
@@ -42,3 +42,4 @@ Scenario
 31/10/2019:
 - “Investor 1” earns 28.06 pounds
 - “Investor 3” earns 21.29 pounds
+
