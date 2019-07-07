@@ -18,7 +18,7 @@ func main() {
 
 	li.AddLoan(loan)
 	fmt.Println(`Scenario
-- Given a loan (start 01/10/2015 end 15/11/2015).
+- Given a loan (start 2019-10-01 end 2019-11-15).
 - Given the loan has 2 tranches called A and B (3% and 6% monthly interest rate) each with
 1,000 pounds amount available.`)
 
@@ -37,7 +37,8 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Printf("Just after making investment of 1000 the user has %s money\n", someUser.Money)
+	fmt.Printf("The user is making investment of 1000 on 2019-10-03")
+	fmt.Printf("Just after making the investment the user has %s money\n", someUser.Money)
 
 	li.PayPaychecks(calendar.NewDate("2019-11-01"))
 	fmt.Printf("At the 1st of November the user got income of %s money\n", someUser.Money)
