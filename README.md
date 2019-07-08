@@ -13,6 +13,9 @@ Or run
 
 `$ go test && go build -mod vendor app/main.go && ./main`
 
+### Link to GoDoc
+[https://godoc.org/github.com/Sieciechu/lendinvest](https://godoc.org/github.com/Sieciechu/lendinvest)
+
 ### More details about the exercise
 Exercise
 
@@ -48,7 +51,7 @@ Scenario
 * Though I have no other dependencies `$ go mod vendor; go build -mod vendor` allows to keep dependencies in vendor folder with needed versions
 * I come from PHP environment. Golang basic syntax is easy and there was no trouble to model domain for **this topic** in golang.
 * Testing most of functions was quite handy. Lack of object mocking in golang testing package dissallowed me to test some functionalities at the top level. I would have to search for some testing framework (if go supports somehow mocking objects by reflection) or would have to introduce some more interfaces so I could implement mock/dummy methods.
-* As go's testing package allows to test non-exported/support functions/methods I got excited and tested them too, and forgot about discipline to focus more on kind of public ones/main functionalities. Which this time lead to: though I have same amount of things tested, but badly structured - some test cases of single functionality are covered in "sub-methods"/"support-methods".
+* As go's testing package allows to test non-exported/support functions/methods I got excited and tested them too, and forgot about discipline to focus more on kind of public ones/main functionalities. Which this time lead to: though I have same amount of things tested, but some of them are not so well structured - few test cases of single functionality are covered in "sub-methods"/"support-methods".
 * I wanted to create other array having pointers to the original array values. So I wrote something like:
 ```go
 // ...
