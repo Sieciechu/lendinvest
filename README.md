@@ -46,7 +46,7 @@ Scenario
 - “Investor 1” earns 28.06 pounds
 - “Investor 3” earns 21.29 pounds
 
-### Some conclusions, thoughts from this excercise:
+### Some private conclusions, thoughts from this excercise:
 * `$ go mod init github.com/Sieciechu/lendinvest` allowed to work outside of $GOPATH - see `$ go help modules`
 * Though I have no other dependencies `$ go mod vendor; go build -mod vendor` allows to keep dependencies in vendor folder with needed versions
 * I come from PHP environment. Golang basic syntax is easy and there was no trouble to model domain for **this topic** in golang.
