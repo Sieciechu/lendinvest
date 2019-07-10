@@ -1,5 +1,5 @@
 ### Introduction
-This library is kind of fast-short, to be done within few days, excercise about playing with golang and DDD and unit testing. It's not meant to be perfect. Everything is done without using a database. It's more a package than app. App is non interactive and is created only to show basics of package. The most things happen in the tests.
+This is just an *excercise*. The library is kind of fast-short, to be done within few days, excercise about playing with golang and DDD and unit testing. It's not meant to be perfect. Everything is done without using a database. It's more a package than app. App is non interactive and is created only to show basics of package. The most things happen in the tests.
 
 ### How to install:
 Clone the git repository to folder outside of your $GOPATH as the project uses go modules.
