@@ -65,5 +65,5 @@ for _, p := range arr {
 * Most of the times I used slices as containers, just in the end I found go's container list (https://golang.org/pkg/container/), maybe it would be more handy/better to use
 * Feared of the lack of exceptions. But when you keep in mind, that exceptions from lower levels should not leak up just as they are to upper levels, so anyway you have to process cought lower level exceptions. For example: the end user of a game should see error like 'error in saving game' rather than 'sql exception, state 20090 in file /path/to/file line 30'. So in this exercise handling errors each time instead of catching exceptions was not so annoying as I had expected (at least in this exercise).
 * Accidental assignment to nil map caused **runtime** panic. Simple example: `var people map[string]int;    people["john"] = 32`. So remember to initialize it with make or with literals
-
+* Probably structs: Loan & Tranche could implement same interface for MakeInvestment, so in future it would be possible to invest in something else implementing this interface
 * Visual Studio Code is ok, but not so good as JetBrains Goland ;).
